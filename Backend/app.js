@@ -6,6 +6,10 @@ const validator = require('validator')
 const PORT = 3000;
 dbConnect() // Call the Mongoose
 
+app.use('/api',require('./routes/userRoutes'))
+
+
+
 app.listen(PORT,()=>{
     console.log(`Server is running on port ${PORT}`)
 })
