@@ -25,6 +25,9 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Password is required'],
         validate: {
             validator: function (val) {
+                if (typeof val !== 'string' || val.trim().length === 0) {
+                    return false;
+                }
                 return validator.isStrongPassword(val, {
                     minLength: 8,
                     minLowercase: 1,
@@ -33,7 +36,7 @@ const userSchema = new mongoose.Schema({
                     minSymbols: 1
                 });
             },
-            message: '{VALUE} is not a strong enough password'
+            message: props => `'${props.value}' is not strong enough. Password must have at least 8 characters, including 1 lowercase, 1 uppercase, 1 number, and 1 symbol.`
         }
     }
 });
