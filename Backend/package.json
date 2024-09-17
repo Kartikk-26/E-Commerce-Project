@@ -11,6 +11,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "colors": "^1.4.0",
+    "colours": "^0.6.0-2",
     "express": "^4.21.0",
     "mongoose": "^8.6.2",
     "validator": "^13.12.0"
