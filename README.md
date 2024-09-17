@@ -4,7 +4,7 @@
 # 💡 QuickBazaar  
 Welcome to **QuickBazaar**! 🛒🚀
 
-**QuickBazaar** is a comprehensive e-commerce platform designed to provide a smooth and efficient shopping experience. 
+**QuickBazaar** is a comprehensive E-commerce platform designed to provide a smooth and efficient shopping experience. 
 
 It offers key features such as product browsing, shopping cart management, and a secure checkout process.
 
@@ -90,7 +90,7 @@ We encourage contributions to enhance **QuickBazaar**. To contribute:
 
 ## 💬 Get in Touch 
 
-Stay connected on [LinkedIn](https://www.linkedin.com/in/-kartikjain/) and [GitHub](https://github.com/kartikk26) to explore more of my projects and follow my progress as I continue my learning journey. 
+Stay connected on [LinkedIn](https://www.linkedin.com/in/-kartikjain/) and [GitHub](https://github.com/Kartikk-26) to explore more of my projects and follow my progress as I continue my learning journey. 
 
 Let’s collaborate and create impactful web applications together. Feel free to reach out if you have any ideas or opportunities to discuss.
 
