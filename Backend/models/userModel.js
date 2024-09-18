@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-
+const bcrypt = require('bcrypt')
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -40,6 +40,17 @@ const userSchema = new mongoose.Schema({
         }
     }
 });
+
+
+//Hash the password
+userSchema.pre('save', async function(next) {
+    //if password is not modified we dont need to hash the password again
+    if(!this.isModified('password')) next()
+        //hash the password
+    this.password = await bcrypt.hash(this.password,12)
+    next()
+})
+
 
 const User = mongoose.model('User', userSchema);
 
