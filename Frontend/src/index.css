@@ -1,3 +1,28 @@
+/* index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+}
+
+input:focus {
+    outline: none;
+    border-color: #3b82f6; /* Blue border on focus */
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); /* Focus ring */
+}
+
+input {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Error Styles */
+.border-red-500 {
+    border-color: #ef4444; /* Red border for errors */
+}
+
+.text-red-500 {
+    color: #ef4444; /* Red text for error messages */
+}
