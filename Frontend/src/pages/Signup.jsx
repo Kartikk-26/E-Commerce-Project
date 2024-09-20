@@ -1,14 +1,16 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
+import { z } from 'zod';
+import axios from 'axios';
+import { toast } from 'sonner';
 
 export default function Signup() {
 
     const schema = z.object({
         name: z.string().min(1, 'Name is required').max(40, "Name cannot exceed 40 characters"),
         email: z.string().email("Invalid email address"),
-        password: z.string().min(6, "Password must be at least 6 characters long"),
+        password: z.string().min(6, "Password must be at least 6 characters long").max(20, "Password cannot exceed 20 characters").regex(/[0-9]/,"password must contain one number").regex(/[A-Z]/,"password must contain atleast one uppercase ").regex(/[^a-zA-Z0-9\s]/,"password should contain atleast on special character"),
         phone: z.string().min(10, "Phone number must be at least 10 characters long").max(15, "Phone number cannot exceed 15 characters") // Add phone number validation
     });
 
@@ -17,8 +19,15 @@ export default function Signup() {
         mode: 'onChange' // Ensures validation happens on input change
     });
     
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = async (data) => {
+        try{
+            const res = await axios.post("http://localhost:3000/api/register",data)
+            toast.success("User regsiterd sucessfully")
+        }
+        catch (errors){
+            
+        }
+
     }
 
     return (
@@ -72,7 +81,7 @@ export default function Signup() {
                     </div>
                     <button
                         type="submit"
-                        className="w-full py-2 bg-blue-500 text-white font-semibold rounded-lg shadow hover:bg-blue-600 transition duration-300"
+                        className="w-full py-2 bg-black text-white font-semibold rounded-lg shadow hover:bg-blue-600 transition duration-300"
                     >
                         Signup
                     </button>
