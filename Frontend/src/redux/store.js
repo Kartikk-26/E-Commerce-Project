@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import counterReducer from './counterslice'
 
-console.lof(counterReducer);
+console.log(counterReducer);
 
 const store = configureStore({
     reducer : {
