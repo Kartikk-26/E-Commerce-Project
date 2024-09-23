@@ -38,6 +38,11 @@ const userSchema = new mongoose.Schema({
             },
             message: props => `'${props.value}' is not strong enough. Password must have at least 8 characters, including 1 lowercase, 1 uppercase, 1 number, and 1 symbol.`
         }
+    },
+    role : {
+        type : String,
+        enum : ['admin', 'user'],
+        default : 'user'
     }
 });
 

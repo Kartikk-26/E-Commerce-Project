@@ -4,9 +4,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import axios from 'axios';
 import { toast } from 'sonner';
+import { useDispatch } from 'react-redux';
+import { Register } from '../redux/user';
+
 
 export default function Signup() {
 
+    const dispatch = useDispatch();
     const schema = z.object({
         name: z.string().min(1, 'Name is required').max(40, "Name cannot exceed 40 characters"),
         email: z.string().email("Invalid email address"),
@@ -19,14 +23,8 @@ export default function Signup() {
         mode: 'onChange' // Ensures validation happens on input change
     });
     
-    const onSubmit = async (data) => {
-        try{
-            const res = await axios.post("http://localhost:3000/api/register",data)
-            toast.success("User regsiterd sucessfully")
-        }
-        catch (errors){
-            
-        }
+    const onSubmit = (data) => {
+        dispatch(Register(data))
 
     }
 
