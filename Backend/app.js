@@ -1,18 +1,32 @@
 const express = require('express');
 const app = express();
 const dbConnect = require('./db');
-const validator = require('validator');
-const colors = require('colors'); // Ensure you have installed the 'colors' package
-const cors = require('cors');
-app.use(cors());
-
 const PORT = 3000;
-dbConnect(); // Call the Mongoose connection
+const colors = require('colors');
+const cors = require('cors')
+app.use(cors())
+//NOTE fn to connect with the mongodb
+dbConnect();
 
-app.use(express.json())
+//NOTE middleware to parse the req.body data
+app.use(express.json());
+
+//NOTE Routes middleware
 app.use('/api', require('./routes/userRoutes'));
-app.use(cors());
+app.use('/api',require('./routes/categoryRoutes'
+))
 
+//NOTE GLOBAL ROUTES HANDLER (middleware)
+app.use((req, res, next) => {
+  res.status(404).json({
+    error: `Requested url ${req.url} not found`,
+  });
+  next();
+});
+
+//global error handler for our app this will send response for all the errors in our app
+
+//listening on the server
 app.listen(PORT, () => {
-    console.log(colors.magenta(`Server is running on port ${PORT}`)); // Fixing the parentheses and using 'colors'
+  console.log(colors.yellow(`App is listening on the port:${PORT}`));
 });
