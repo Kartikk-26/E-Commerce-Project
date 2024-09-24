@@ -35,48 +35,48 @@ function Signup() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 via-purple-600 to-pink-500">
-      <div className="p-10 w-[28rem] shadow-2xl bg-gray-900 text-white rounded-lg">
-        <h1 className="text-white font-extrabold text-3xl text-center mb-6">Create Account</h1>
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-300">
+      <div className="p-10 w-[30rem] shadow-xl bg-white text-gray-800 rounded-xl border border-gray-200">
+        <h1 className="text-gray-800 font-bold text-2xl text-center mb-6">Create Your Account</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
 
           <div className="relative mb-6">
-            <FaUser className="absolute left-3 top-3 text-gray-400" />
+            <FaUser className="absolute left-3 top-3 text-gray-500" />
             <input
-              className="pl-12 w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-800 text-white"
+              className="pl-12 w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-800"
               type="text"
-              placeholder="Name"
+              placeholder="Full Name"
               {...register('name')}
             />
             {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
           </div>
 
           <div className="relative mb-6">
-            <FaEnvelope className="absolute left-3 top-3 text-gray-400" />
+            <FaEnvelope className="absolute left-3 top-3 text-gray-500" />
             <input
-              className="pl-12 w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-800 text-white"
+              className="pl-12 w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-800"
               type="email"
-              placeholder="Email"
+              placeholder="Email Address"
               {...register('email')}
             />
             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
           </div>
 
           <div className="relative mb-6">
-            <FaPhone className="absolute left-3 top-3 text-gray-400" />
+            <FaPhone className="absolute left-3 top-3 text-gray-500" />
             <input
-              className="pl-12 w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-800 text-white"
+              className="pl-12 w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-800"
               type="text"
-              placeholder="Phone"
+              placeholder="Phone Number"
               {...register('phone')}
             />
             {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
           </div>
 
           <div className="relative mb-6">
-            <FaLock className="absolute left-3 top-3 text-gray-400" />
+            <FaLock className="absolute left-3 top-3 text-gray-500" />
             <input
-              className="pl-12 w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-800 text-white"
+              className="pl-12 w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-800"
               type="password"
               placeholder="Password"
               {...register('password')}
@@ -85,7 +85,7 @@ function Signup() {
           </div>
 
           <button
-            className="bg-purple-600 hover:bg-purple-700 transition-all duration-300 px-10 py-3 rounded-lg w-full mt-5 text-white font-semibold"
+            className="bg-blue-600 hover:bg-blue-700 transition-all duration-300 px-10 py-3 rounded-lg w-full mt-5 text-white font-semibold"
             type="submit"
           >
             {loading ? 'Signing up...' : 'Sign Up'}
@@ -93,9 +93,9 @@ function Signup() {
         </form>
 
         <div className="text-center mt-6">
-          <p className="text-gray-300">
+          <p className="text-gray-600">
             Already have an account?{" "}
-            <Link to="/login" className="text-purple-500 hover:underline font-medium">
+            <Link to="/login" className="text-blue-600 hover:underline font-medium">
               Log in here
             </Link>
           </p>
