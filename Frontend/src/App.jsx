@@ -1,33 +1,30 @@
-import { Routes, Route } from 'react-router-dom';
-import Signup from './pages/Signup';
-import { Toaster } from 'sonner';
-import Login from './pages/Login';
-import Homepage from './pages/Homepage';
-import Dashboard from './pages/Dashboard';
-import PrivateRoutes from './components/PrivateRoutes';
-
+import {Routes,Route} from 'react-router-dom' 
+import Signup from './pages/Signup'
+import {Toaster} from 'sonner'
+import Login from './pages/Login'
+import Homepage from './pages/Homepage'
+import PrivateRoute from './components/PrivateRoutes'
+import Dashboard from './pages/Dashboard'
+import GoogleHandler from './components/GoogleHandler'
 export default function App() {
   return (
-    <div>
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/register" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
+   <div>
+    <Routes>
+      <Route path="/register" element={<Signup/>}/>
+      <Route path="/login" element={<Login/>} />
+<Route path='auth/google/callback' element={<GoogleHandler/>}/>
+      <Route element={<PrivateRoute allowrole={['user']}/>}>
+      <Route path="/" element={<Homepage/>}/>
+      </Route>
 
-        {/* Private Routes for 'user' role */}
-        <Route element={<PrivateRoutes allowrole={['user']} />}>
-          <Route path="/" element={<Homepage />} />
-        </Route>
-
-        {/* Private Routes for 'admin' role */}
-        <Route element={<PrivateRoutes allowrole={['admin']} />}>
-          <Route path="/" element={<Homepage />} /> {/* Admin homepage or dashboard */}
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Route>
-      </Routes>
-
-      {/* Toaster for notifications */}
-      <Toaster position="bottom-right" />
-    </div>
-  );
+      <Route element={<PrivateRoute allowrole={['admin']}/>}>
+         <Route path="/" element={<Homepage/>}/>
+         <Route path="/dashboard" element={<Dashboard/>}></Route>
+      </Route>
+       
+      
+    </Routes>
+    <Toaster position="bottom-right" />
+   </div>
+  )
 }

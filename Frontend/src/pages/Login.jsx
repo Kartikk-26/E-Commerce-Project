@@ -70,7 +70,7 @@ function Login() {
         </form>
 
         <button
-          className="flex items-center justify-center mt-5 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded w-full transition-all"
+          className="flex items-center justify-center mt-5 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded w-full transition-all" onClick={()=>window.location.href="http://localhost:3000/api/auth/google"}
         >
           <FaGoogle className="mr-2" />
           Login with Google
