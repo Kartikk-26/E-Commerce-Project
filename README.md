@@ -1,10 +1,10 @@
 
 ---
 
-# 💡 QuickBazaar  
-Welcome to **QuickBazaar**! 🛒🚀
+# 💡 WebifyMart  
+Welcome to **WebifyMart**! 🛒🚀
 
-**QuickBazaar** is a comprehensive E-commerce platform designed to provide a smooth and efficient shopping experience. 
+**WebifyMart** is a comprehensive E-commerce platform designed to provide a smooth and efficient shopping experience. 
 
 It offers key features such as product browsing, shopping cart management, and a secure checkout process.
 
@@ -18,7 +18,7 @@ It offers key features such as product browsing, shopping cart management, and a
 - [Get in Touch](#get-in-touch)
 
 ## 📦 Overview  
-**QuickBazaar** simulates a fully operational online store where users can :  
+**WebifyMart** simulates a fully operational online store where users can :  
 - Browse and search for products with detailed descriptions.  
 - Add, remove, and manage items in their shopping cart.  
 - Proceed through a secure checkout process.  
@@ -32,7 +32,7 @@ The application is built using the following technologies :
 - **Authentication**: JWT (JSON Web Tokens)  
 - **Payment Gateway**: Stripe/PayPal integration
 
-## ✨ Key Features  
+## 🎯 Key Features  
 - **User Authentication** : Secure JWT-based authentication for user registration and login.  
 - **Product Listings** : Dynamic catalog with filtering and search functionalities.  
 - **Shopping Cart** : Manage product quantities, add or remove items.  
@@ -40,39 +40,67 @@ The application is built using the following technologies :
 - **Admin Dashboard** : Comprehensive interface for managing products, categories, and orders.  
 - **Responsive Design** : Optimized for various devices using Tailwind CSS and Bootstrap.
 
-## 🚀 Installation  
-To set up **QuickBazaar** locally, follow these steps :
+Here's the updated **Installation** section with the cloning step added as the first point:
 
+---
+
+## 🔐 Installation  
+To set up **WebifyMart** locally, follow these steps for both the frontend and backend:
+
+### 📂 Repository Clone Instructions :
 1. **Clone the repository**:  
    ```bash  
    git clone https://github.com/Kartikk-26/E-Commerce-Project.git  
    ```  
-2. **Navigate to the project directory**:  
+
+### 📂 Backend Setup :
+2. **Navigate to the backend directory** :  
    ```bash  
-   cd E-Commerce-Project  
+   cd Backend  
    ```  
-3. **Install dependencies**:  
+3. **Initialize and install backend dependencies** :  
    ```bash  
+   npm init -y  
    npm install  
    ```  
-4. **Configure environment variables**:  
-   Create a `.env` file in the project root and add:  
+4. **Configure environment variables** :  
+   Create a `.env` file in the `Backend` directory and add:  
    ```env  
-   MONGO_URI=your_mongodb_uri  
-   JWT_SECRET=your_jwt_secret  
-   STRIPE_API_KEY=your_stripe_key  
+   MONGO_URI = your_mongodb_uri  
+   JWT_SECRET = your_jwt_secret  
+   STRIPE_API_KEY = your_stripe_key  
+   CLIENT_ID = your_client_id  
+   CLIENT_SECRET = your_client_secret  
+   CALLBACK_URL = your_callback_url  
    ```  
-5. **Run the application**:  
+5. **Start the backend server** :  
    ```bash  
    npm start  
    ```
 
+### 📁 Frontend Setup :
+6. **Navigate to the frontend directory** :  
+   ```bash  
+   cd Frontend  
+   ```  
+7. **Initialize and install frontend dependencies** :  
+   ```bash  
+   npm init -y  
+   npm install  
+   ```  
+8. **Start the frontend server** :  
+   ```bash  
+   npm run dev  
+   ```
+
+---
+
 ## 🛒 Usage  
-- **Users**: Register, log in, browse products, manage cart, and complete purchases.  
-- **Admins**: Access the dashboard to manage product inventory and orders.
+- **Users** : Register, log in, browse products, manage cart, and complete purchases.  
+- **Admins** : Access the dashboard to manage product inventory and orders.
 
 ## 🧑‍💻 Contributing  
-We encourage contributions to enhance **QuickBazaar**. To contribute:  
+We encourage contributions to enhance **WebifyMart**. To contribute:  
 - **Fork the repository**  
 - **Create a new branch**:  
    ```bash  
