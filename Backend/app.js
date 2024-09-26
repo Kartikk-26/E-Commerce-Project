@@ -6,9 +6,12 @@ const PORT = 3000;
 const colors = require('colors');
 require('dotenv').config()
 const cors = require('cors')
-const session = require('express-session')
-require('./config/passportConfig')
-app.use(cors())
+const session = require('express-session') ;
+
+require('./config/passportConfig');
+
+app.use(cors()) ;
+app.use('/uploads' , express.static('uploads')) ;
 
 app.use(session({
   secret: 'my-secret-string',
@@ -31,6 +34,7 @@ app.use(express.json());
 app.use('/api', require('./routes/userRoutes'));
 app.use('/api',require('./routes/categoryRoutes'
 ))
+app.use('/api', require('./routes/productRoutes'))
 
 //NOTE GLOBAL ROUTES HANDLER (middleware)
 app.use((req, res, next) => {

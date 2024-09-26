@@ -1,5 +1,5 @@
 const mongoose = require('mongoose') ;
-
+const {Schema} = require('mongoose')
 const productSchema = new mongoose.Schema({
     name : {
         type : String,
@@ -27,12 +27,18 @@ const productSchema = new mongoose.Schema({
         type : Number ,
         default : 0
     },
-    discountPercantage : {
+    discountPercentage : {
         type : Number,
         
     }
 })
 
+//mongoose virtaul 
+productSchema.virtual('discountPrice').get(function(){
+    return this.price - (this.price * this.discountPercentage / 100)
+})
+
+productSchema.set('toJSON',{virtuals:true})
 const Product = mongoose.model('Product',productSchema)
 
 module.exports = Product
