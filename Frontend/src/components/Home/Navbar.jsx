@@ -2,73 +2,76 @@ import React from 'react';
 import logo from '../../assets/logo1.png';
 import { AiOutlineUser } from 'react-icons/ai';
 import { HiOutlineShoppingBag } from 'react-icons/hi2';
-import { GoHeart } from 'react-icons/go';
+import { GoSignOut } from "react-icons/go";
 import { Link } from 'react-router-dom';
 import Navitems from './Navitems';
 import { NavData } from './data';
-import { GoSignOut } from "react-icons/go";
 import { logout } from '../../redux/user';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
 function Navbar() {
- const name = localStorage.getItem('name')
-const dispatch = useDispatch()
-const navigate = useNavigate()
-const handleLogOut  = async() => {
-await  dispatch(logout())
-navigate('/login')
-}
+  const { totalQuantity } = useSelector((state) => state.cart);
+  const name = localStorage.getItem('name');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogOut = async () => {
+    await dispatch(logout());
+    navigate('/login');
+  };
+
   return (
-    <header className="p-4 sticky top-0 z-50  bg-white border border-gray-200">
+    <header className="p-4 sticky top-0 z-50 bg-white shadow-md">
       <div>
-        {/* //firstrow */}
+        {/* First row */}
         <div className="flex justify-between items-center p-2 mb-6">
           <div className="flex items-center space-x-2">
-            <img src={logo} className="h-8" />
-            <p className="text-xl tracking-wide font-semibold">Ecommerce</p>
+            <img src={logo} className="h-10" alt="QuickBazaar Logo" />
+            <p className="text-2xl tracking-wide font-semibold text-gray-800 hover:text-emerald-500 transition-all duration-200">
+              QuickBazaar
+            </p>
           </div>
 
           <div className="w-96">
             <input
-              className="w-full p-2 font-normal bg-white border border-gray-500 rounded-none"
+              className="w-full p-2 font-normal bg-gray-100 border border-gray-300 focus:border-emerald-400 transition-colors rounded-md"
               type="text"
-              placeholder="Search"
+              placeholder="Search for products"
             />
           </div>
 
-          <div className="flex items-center space-x-10">
-
-              <Link to="/profile">
-              <AiOutlineUser />
-              <span className="text-xs font-medium hover:underline transition-all duration-200">
-               {name ? name : 'User'}
+          <div className="flex items-center space-x-8 text-gray-600">
+            <Link to="/profile" className="flex items-center space-x-1 hover:text-emerald-500 transition-all duration-200">
+              <AiOutlineUser size={24} className="text-pastel-blue" />
+              <span className="text-sm font-medium">
+                {name ? name : 'User'}
               </span>
             </Link>
-           
-            <Link to="/cart" className='relative'>
-              <HiOutlineShoppingBag />
-              <span className="text-xs font-medium hover:underline transition-all duration-200">
-                Cart
-              </span>
-             </Link>
-            
-           
 
-             <Link onClick={handleLogOut}>
-           <GoSignOut />
-              <span className="text-xs font-medium hover:underline transition-all duration-200">
-               Log-Out
-              </span>
+            <Link to="/cart" className="relative flex items-center space-x-1 hover:text-emerald-500 transition-all duration-200">
+              <HiOutlineShoppingBag size={24} className="text-pastel-blue" />
+              <span className="text-sm font-medium">Cart</span>
+              {totalQuantity > 0 && (
+                <span className="absolute rounded-full bg-emerald-400 text-xs p-1 top-[-10px] right-[-10px]">
+                  {totalQuantity}
+                </span>
+              )}
+            </Link>
+
+            <Link onClick={handleLogOut} className="flex items-center space-x-1 hover:text-emerald-500 transition-all duration-200">
+              <GoSignOut size={24} className="text-pastel-blue" />
+              <span className="text-sm font-medium">Log-Out</span>
             </Link>
           </div>
         </div>
 
-        {/* second */}
+        {/* Second row */}
         <div>
           <div className="flex justify-center items-center">
-            <ul className="flex space-x-10">
+            <ul className="flex space-x-8 text-gray-600">
               {NavData.map((items) => (
-                <Navitems to={items.url} text={items.text} />
+                <Navitems key={items.text} to={items.url} text={items.text} />
               ))}
             </ul>
           </div>
