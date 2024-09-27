@@ -27,9 +27,9 @@ function Navbar() {
         {/* First row */}
         <div className="flex justify-between items-center p-2 mb-6">
           <div className="flex items-center space-x-2">
-            <img src={logo} className="h-10" alt="QuickBazaar Logo" />
-            <p className="text-2xl tracking-wide font-semibold text-gray-800 hover:text-emerald-500 transition-all duration-200">
-              QuickBazaar
+            <img src={logo} className="h-8" alt="WebifyMart Logo" />
+            <p className="text-3xl tracking-wide font-semibold text-gray-800 hover:text-emerald-500 transition-all duration-200">
+             WebifyMart
             </p>
           </div>
 
