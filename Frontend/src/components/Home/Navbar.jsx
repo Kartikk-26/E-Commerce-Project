@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../assets/logo1.png';
+import logo from '../../assets/NavLogoMain.png';
 import { AiOutlineUser } from 'react-icons/ai';
 import { HiOutlineShoppingBag } from 'react-icons/hi2';
 import { GoSignOut } from "react-icons/go";
@@ -22,59 +22,84 @@ function Navbar() {
   };
 
   return (
-    <header className="p-4 sticky top-0 z-50 bg-white shadow-md">
+    <header className="p-2 sticky top-0 z-50 bg-gradient-to-r from-white via-gray-100 to-gray-200 shadow-lg">
       <div>
         {/* First row */}
-        <div className="flex justify-between items-center p-2 mb-6">
-          <div className="flex items-center space-x-2">
-            <img src={logo} className="h-8" alt="WebifyMart Logo" />
-            <p className="text-3xl tracking-wide font-semibold text-gray-800 hover:text-emerald-500 transition-all duration-200">
-             WebifyMart
+        <div className="flex justify-between items-center py-1 mb-2"> {/* Reduced padding */}
+          {/* Logo and Name Container */}
+          <div className="flex items-center space-x-2"> {/* Reduced space */}
+            <img 
+              src={logo} 
+              className="h-16 w-16 rounded-full object-contain" // Reduced size to h-16 and w-16
+              alt="WebifyMart Logo" 
+            />
+            <p className="text-2xl font-semibold text-gray-800 hover:text-emerald-500 transition-colors duration-300"> {/* Reduced font size */}
+              WebifyMart
             </p>
           </div>
 
-          <div className="w-96">
+          {/* Search bar */}
+          <div className="relative w-1/3 hidden lg:block">
             <input
-              className="w-full p-2 font-normal bg-gray-100 border border-gray-300 focus:border-emerald-400 transition-colors rounded-md"
+              className="w-full p-1 pl-8 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-400 transition-colors" // Reduced padding
               type="text"
               placeholder="Search for products"
             />
+            <svg
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              width="16"
+              height="16"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M10 4a6 6 0 100 12 6 6 0 000-12zM21 21l-4.35-4.35"
+              />
+            </svg>
           </div>
 
-          <div className="flex items-center space-x-8 text-gray-600">
-            <Link to="/profile" className="flex items-center space-x-1 hover:text-emerald-500 transition-all duration-200">
-              <AiOutlineUser size={24} className="text-pastel-blue" />
-              <span className="text-sm font-medium">
+          {/* Icons (Profile, Cart, Logout) */}
+          <div className="flex items-center space-x-3 text-gray-700"> {/* Reduced space */}
+            <Link to="/profile" className="flex items-center space-x-1 hover:text-emerald-500 transition-colors duration-300">
+              <AiOutlineUser size={20} />
+              <span className="text-xl font-bold"> {/* Increased font size */}
                 {name ? name : 'User'}
               </span>
             </Link>
 
-            <Link to="/cart" className="relative flex items-center space-x-1 hover:text-emerald-500 transition-all duration-200">
-              <HiOutlineShoppingBag size={24} className="text-pastel-blue" />
-              <span className="text-sm font-medium">Cart</span>
+            <Link to="/cart" className="relative flex items-center space-x-1 hover:text-emerald-500 transition-colors duration-300">
+              <HiOutlineShoppingBag size={20} />
+              <span className="text-xl font-bold">Cart</span> {/* Increased font size */}
               {totalQuantity > 0 && (
-                <span className="absolute rounded-full bg-emerald-400 text-xs p-1 top-[-10px] right-[-10px]">
+                <span className="absolute rounded-full bg-emerald-400 text-xs p-1 px-2 text-white top-[-8px] right-[-8px] shadow-md">
                   {totalQuantity}
                 </span>
               )}
             </Link>
 
-            <Link onClick={handleLogOut} className="flex items-center space-x-1 hover:text-emerald-500 transition-all duration-200">
-              <GoSignOut size={24} className="text-pastel-blue" />
-              <span className="text-sm font-medium">Log-Out</span>
-            </Link>
+            <button onClick={handleLogOut} className="flex items-center space-x-1 hover:text-emerald-500 transition-colors duration-300">
+              <GoSignOut size={20} />
+              <span className="text-xl font-bold"> {/* Increased font size */}
+                Log-Out
+              </span>
+            </button>
           </div>
         </div>
 
-        {/* Second row */}
-        <div>
-          <div className="flex justify-center items-center">
-            <ul className="flex space-x-8 text-gray-600">
+        {/* Second row - Navigation */}
+        <div className="border-t border-gray-300 pt-2">
+          <nav className="flex justify-center space-x-2">
+            <ul className="flex space-x-4 text-gray-600 text-base font-medium">
               {NavData.map((items) => (
                 <Navitems key={items.text} to={items.url} text={items.text} />
               ))}
             </ul>
-          </div>
+          </nav>
         </div>
       </div>
     </header>
