@@ -1,53 +1,49 @@
-const express = require('express');
-const app = express();
-const dbConnect = require('./db');
+const express = require('express') ;
+const colors = require('colors')
+const app = express() ;
+const PORT = 3000 ;
+const dbConnect = require('./db')
+const errorHandler  = require('./middleware/errorHandler')
 const passport = require('passport')
-const PORT = 3000;
-const colors = require('colors');
+const session = require('express-session')
+
 require('dotenv').config()
+require('./config/passportConfig')
 const cors = require('cors')
-const session = require('express-session') ;
-
-
-require('./config/passportConfig');
-
+//NOTE parse the data from the req.body
 app.use(cors()) ;
-app.use('/uploads' , express.static('uploads')) ;
 
+//NOTE creating a session whenever login with google hit..
+app.use('/uploads',express.static('uploads'))
 app.use(session({
   secret: 'my-secret-string',
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    maxAge : 1000 * 60 * 60 * 24 * 5
-  }
+  resave: false,    
+  saveUninitialized: false ,  //if something is not store we donot need to create session
+  cookie: { maxAge : 1000 * 60 * 60 * 24 * 30 }
 }))
 
-app.use(passport.initialize());
-app.use(passport.session()) ;
-//NOTE fn to connect with the mongodb
-dbConnect();
-
-//NOTE middleware to parse the req.body data
+//NOTE initializing the passport middleware in the express app
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(express.json());
 
-//NOTE Routes middleware
-app.use('/api', require('./routes/userRoutes'));
-app.use('/api',require('./routes/categoryRoutes'
-))
+
+dbConnect() ;
+
+
+app.use('/api',require('./routes/userRoutes'))
 app.use('/api', require('./routes/productRoutes'))
 
-//NOTE GLOBAL ROUTES HANDLER (middleware)
-app.use((req, res, next) => {
-  res.status(404).json({
-    error: `Requested url ${req.url} not found`,
-  });
-  next();
-});
+//global route handler 
+app.use((req,res,next)=>{
+    res.status(404).send(`requested url ${req.url} not found`)
+    next()
+})
 
-//global error handler for our app this will send response for all the errors in our app
+//global error handler middleware
+app.use(errorHandler) ;
 
-//listening on the server
-app.listen(PORT, () => {
-  console.log(colors.yellow(`App is listening on the port:${PORT}`));
-});
+
+app.listen(PORT , ()=>{
+    console.log(colors.yellow(`App is listening on the PORT:${PORT}`))
+})

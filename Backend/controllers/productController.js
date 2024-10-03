@@ -1,62 +1,86 @@
-const Product = require('../models/productModel');
+const Product = require('./../models/productModel');
 
-// Create Product API (already present)
-exports.createProduct = async (req, res) => {
-    try {
-        const { name, price, category, discountPercentage, stock, description } = req.body;
-        const image = req.file.path;
-        const product = await Product.create({ name, price, category, discountPercentage, stock, image, description });
+exports.createProduct = async (req, res, next) => {
+  try {
+    console.log(req.file);
+    const { name, price, description, stock, category, discountPercentage } =
+      req.body;
+    const image = req.file.path;
 
-        if (product) {
-            res.status(200).json({ message: 'success', product });
-        }
-    } catch (error) {
-        res.status(500).send(error);
+    const product = await Product.create({
+      name,
+      price,
+      description,
+      stock,
+      category,
+      discountPercentage,
+      image,
+    });
+    if (product) {
+      res.status(201).json({
+        message: 'success',
+      });
     }
+  } catch (error) {
+    next(error);
+  }
 };
 
-// Get Product API (already present)
 exports.getProduct = async (req, res) => {
-    try {
-        const product = await Product.find().populate('category');
-        if (product) {
-            res.status(200).json({ product });
-        }
-    } catch (error) {
-        res.status(500).json({ error });
+  try {
+    const product = await Product.find();
+    if (product) {
+      res.status(200).json({
+        length: product.length,
+        product,
+      });
     }
+  } catch (error) {
+    next(eror);
+  }
 };
 
-// Delete Product API (newly added)
-exports.deleteProduct = async (req, res) => {
-    try {
-        const product = await Product.findByIdAndDelete(req.params.id);
-        if (product) {
-            res.status(200).json({ message: 'Product deleted successfully' });
-        } else {
-            res.status(404).json({ message: 'Product not found' });
-        }
-    } catch (error) {
-        res.status(500).json({ error });
+exports.deleteProduct = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findByIdAndDelete(id);
+
+    if (!product) {
+      throw new Error('Product not found');
     }
+
+    res.status(204).json({ message: 'Product deleted successfully' });
+  } catch (error) {
+    next(error);
+  }
 };
 
-// Update Product API (newly added)
-exports.updateProduct = async (req, res) => {
-    try {
-        const { name, price, category, discountPercentage, stock, description } = req.body;
-        const updatedProduct = await Product.findByIdAndUpdate(
-            req.params.id,
-            { name, price, category, discountPercentage, stock, description, image: req.file?.path },
-            { new: true }
-        );
-        
-        if (updatedProduct) {
-            res.status(200).json({ message: 'Product updated successfully', updatedProduct });
-        } else {
-            res.status(404).json({ message: 'Product not found' });
-        }
-    } catch (error) {
-        res.status(500).json({ error });
+exports.updateProduct = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { name, price, description, stock, category, discountPercentage } =
+      req.body;
+
+    let image;
+    if (req.file) {
+      image = req.file.path;
     }
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      { name, price, description, stock, category, discountPercentage, image },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedProduct) {
+      throw new Error('Product not found');
+    }
+
+    res.status(200).json({
+      message: 'Product updated successfully',
+      product: updatedProduct,
+    });
+  } catch (error) {
+    next(error);
+  }
 };

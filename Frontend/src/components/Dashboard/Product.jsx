@@ -1,105 +1,133 @@
-import React, { useEffect } from 'react';
-import Box from '@mui/material/Box';
+import React, { useEffect, useState } from 'react';
+import { fetchProduct, createProduct } from '../../redux/productSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { DataGrid } from '@mui/x-data-grid';
-import { fetchProduct } from './../../redux/productSlice';
-import { FiEdit2 } from "react-icons/fi";
-import { useSelector, useDispatch } from 'react-redux';
-import { MdDeleteOutline } from "react-icons/md";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { FiEdit2 } from 'react-icons/fi';
+import { MdDeleteOutline } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
 
 function Product() {
-  const { register, handleSubmit } = useForm();
+  const { handleSubmit, register, reset } = useForm();
+  const [isEdit, setIsEdit] = useState(false);
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchProduct());
   }, [dispatch]);
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 500,
+    width: 400,
     bgcolor: 'background.paper',
-    borderRadius: 8,
     boxShadow: 24,
     p: 4,
+    borderRadius: '8px',
   };
 
   const { product } = useSelector((state) => state.product);
+
+  const handleOpen = () => {
+    setOpen(true);
+    reset(); // Reset form fields
+  };
+
+  const handleClose = () => setOpen(false);
+
+  const handleEdit = () => {
+    setIsEdit(true);
+    handleOpen();
+  };
 
   const columns = [
     {
       field: 'image',
       headerName: 'Image',
+      width: 100,
       renderCell: (params) => (
-        <img
-          className="object-contain w-8 h-8 rounded-md"
-          src={`http://localhost:3000/${params.value}`}
-          alt="product"
-        />
+        <div>
+          <img
+            className="object-contain w-14"
+            src={`http://localhost:3000/${params.value}`}
+            alt="Product"
+          />
+        </div>
       ),
     },
-    { field: 'name', headerName: 'Product Name', width: 150 },
-    { field: 'price', headerName: 'Price', width: 100, editable: true },
-    { field: 'description', headerName: 'Description', width: 200 },
-    { field: 'stock', headerName: 'Stock', width: 100 },
+    { field: 'name', headerName: 'Name', width: 100 },
+    {
+      field: 'price',
+      headerName: 'Price(Rs.)',
+      width: 150,
+    },
+    {
+      field: 'category',
+      headerName: 'Category',
+    },
+    {
+      field: 'description',
+      headerName: 'Description',
+      width: 250,
+    },
+    {
+      field: 'discountPrice',
+      headerName: 'Discount Price(Rs.)',
+    },
+    {
+      field: 'stock',
+      headerName: 'Stock Avail.',
+    },
     {
       field: 'actions',
       headerName: 'Actions',
-      width: 100,
-      renderCell: () => (
-        <div className="flex gap-2 items-center justify-center">
-          <FiEdit2 className="text-blue-500 cursor-pointer" size={24} />
-          <MdDeleteOutline className="text-red-500 cursor-pointer" size={24} />
+      renderCell: (params) => (
+        <div className="flex m-2 gap-2 cursor-pointer">
+          <FiEdit2 size={26} onClick={handleEdit} className="text-blue-500" />
+          <MdDeleteOutline size={26} className="text-red-500" />
         </div>
       ),
     },
   ];
 
-  const onSubmit = (data) => {
-    // Handle form submission logic here
-    console.log(data);
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('price', data.price);
+    formData.append('image', data.image[0]);
+    formData.append('category', data.category);
+    formData.append('stock', data.stock);
+    formData.append('description', data.description);
+    formData.append('discountPercentage', data.discountPercentage);
+    
+    await dispatch(createProduct(formData));
+    dispatch(fetchProduct());
     handleClose();
   };
 
   return (
     <div className="m-10">
       <Button
-        onClick={handleOpen}
         variant="contained"
         color="primary"
-        sx={{ mb: 2 }}
+        onClick={handleOpen}
+        className="mb-4"
       >
         Add Product
       </Button>
-
-      <Box sx={{ height: 400, width: '100%', boxShadow: 3, borderRadius: 2 }}>
+      <Box sx={{ height: 400, width: '100%' }}>
         <DataGrid
           rows={product}
           columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 5,
-              },
-            },
-          }}
           pageSizeOptions={[5]}
-          sx={{ borderRadius: 2 }}
         />
       </Box>
-
       <Modal
         open={open}
         onClose={handleClose}
@@ -107,57 +135,61 @@ function Product() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-            sx={{ mb: 3, textAlign: 'center' }}
-          >
-            Add New Product
-          </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Product Name"
-                  {...register('name')}
-                  variant="outlined"
-                  required
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Price"
-                  type="number"
-                  {...register('price')}
-                  variant="outlined"
-                  required
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Description"
-                  {...register('description')}
-                  variant="outlined"
-                  multiline
-                  rows={3}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Button variant="contained" component="label" fullWidth>
-                  Upload Image
-                  <input type="file" hidden {...register('image')} />
-                </Button>
-              </Grid>
-              <Grid item xs={12} sx={{ textAlign: 'center' }}>
-                <Button type="submit" variant="contained" color="primary">
-                  Submit
-                </Button>
-              </Grid>
-            </Grid>
+            <Typography variant="h6" component="h2" className="mb-4">
+              {isEdit ? "Update Product" : "Add Product"}
+            </Typography>
+            <div className="flex flex-col gap-3">
+              <input
+                className="input_field"
+                type="text"
+                {...register('name', { required: true })}
+                placeholder="Enter product name"
+              />
+              <input
+                className="input_field"
+                type="number"
+                {...register('price', { required: true })}
+                placeholder="Enter price"
+              />
+              <input
+                className="input_field"
+                type="file"
+                {...register('image', { required: true })}
+              />
+              <input
+                className="input_field"
+                type="text"
+                {...register('category', { required: true })}
+                placeholder="Enter category"
+              />
+              <input
+                className="input_field"
+                type="text"
+                {...register('description', { required: true })}
+                placeholder="Enter description"
+              />
+              <input
+                className="input_field"
+                type="number"
+                {...register('stock', { required: true })}
+                placeholder="Enter stock"
+              />
+              <input
+                className="input_field"
+                type="number"
+                {...register('discountPercentage')}
+                placeholder="Enter discount percentage"
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                className="mt-2"
+              >
+                {isEdit ? "Update Product" : "Add Product"}
+              </Button>
+            </div>
           </form>
         </Box>
       </Modal>
