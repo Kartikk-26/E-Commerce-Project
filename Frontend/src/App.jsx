@@ -14,7 +14,7 @@ export default function App() {
   //to get the value
   const dispatch = useDispatch();
   const { count } = useSelector((state) => state.count);
-
+console.log(import.meta.env.VITE_API_URL)
   return (
     <div>
       <Routes>

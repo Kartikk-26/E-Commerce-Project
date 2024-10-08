@@ -12,7 +12,7 @@ export const fetchProduct = createAsyncThunk(
   'fetch/product',
   async (_, { rejectWithValue }) => {
     try {
-      const res = await axios.get('http://localhost:3000/api/getproducts');
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/getproducts`);
       return res.data;
     } catch (error) {
       return rejectWithValue(error);
@@ -24,7 +24,7 @@ export const createProduct = createAsyncThunk(
   'create/product',
   async (formData, { rejectWithValue }) => {
     try {
-      const res = await axios.post('http://localhost:3000/api/addproduct', formData , {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/addproduct`, formData , {
         headers : {
           Authorization : `Bearer ${localStorage.getItem('token')}`
         }

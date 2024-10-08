@@ -26,7 +26,7 @@ exports.createProduct = async (req, res, next) => {
   }
 };
 
-exports.getProduct = async (req, res) => {
+exports.getProduct = async (req, res,next) => {
   try {
     const product = await Product.find();
     if (product) {

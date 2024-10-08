@@ -1,6 +1,7 @@
 const User = require('./../models/userModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+require('dotenv').config()
 
 exports.register = async (req, res) => {
   try {
@@ -77,7 +78,7 @@ exports.GoogleAuth = async (req, res) => {
       { expiresIn: '30d' }
     );
     res.redirect(
-      `http://localhost:5173/auth/google/callback?token=${token}&role=${user.role}&name=${user.name}`
+      `res.redirect(${process.env.redirectURL}?token=${token}&role=${user.role}&name=${user.name}`
     );
   } catch (error) {
     next(error);

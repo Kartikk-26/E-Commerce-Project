@@ -9,7 +9,7 @@ import {jwtDecode} from 'jwt-decode';
 
 export const Register = createAsyncThunk('/user/register', async(data,{rejectWithValue})=>{
     try {
-      const res =  await axios.post('http://localhost:3000/api/register',data)
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/register`,data)
       console.log(res.data)
       return res.data
   }
@@ -21,16 +21,16 @@ export const Register = createAsyncThunk('/user/register', async(data,{rejectWit
 
 
 export const userLogin = createAsyncThunk('/user/login', async(data,{rejectWithValue})=>{
-    try {
-      const res = await axios.post('http://localhost:3000/api/login',data)
-      console.log(res.data)
-      return res.data
-  }
-     catch (error) {
-        console.log(error)
-        console.log(rejectWithValue(error))
-     return   rejectWithValue(error)
-    }
+   try {
+     const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/login`,data)
+     console.log(res.data)
+     return res.data
+ }
+    catch (error) {
+       console.log(error)
+       console.log(rejectWithValue(error))
+    return   rejectWithValue(error)
+   }
 
 } )
 
